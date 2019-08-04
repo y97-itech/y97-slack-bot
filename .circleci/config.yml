@@ -104,25 +104,25 @@ jobs:
           command: yarn run eslint --ext js,vue app/javascript
           when: always
 
-deploy:
-    working_directory: /tmp/ci
-    docker:
-      - image: buildpack-deps:trusty
+  deploy:
+    machine: true
     steps:
       - checkout
       - run:
-          name: Setup Heroku Command
+          name: setup heroku command
           command: bash .circleci/setup_heroku.sh
       - run:
           name: Heroku Maintenance ON
           command: heroku maintenance:on -a $HEROKU_APP_NAME
       - run:
-          name: Deploy Staging to Heroku
+          name: "push container to registry.heroku.com"
           command: |
-            heroku login
             heroku container:login
-            heroku container:push web --app $HEROKU_APP_NAME
-            heroku container:release web --app $HEROKU_APP_NAME
+            heroku container:push web -a $HEROKU_APP_NAME
+            heroku container:release web -a $HEROKU_APP_NAME
+      - run:
+          name: heroku db migrate
+          command: heroku run rails db:migrate --app ${HEROKU_APP_NAME}
       - run:
           name: Heroku Maintenance OFF
           command: heroku maintenance:off -a $HEROKU_APP_NAME
