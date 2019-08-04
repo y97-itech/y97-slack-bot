@@ -17,6 +17,9 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  host: db
+  username: postgres
+  password:
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
@@ -78,6 +81,6 @@ test:
 #
 production:
   <<: *default
-  url: <%= ENV['DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
   database: y97_slack_bot_production
 
