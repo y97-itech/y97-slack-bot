@@ -1,20 +1,44 @@
-.keep
+.git
+.gitignore
+README.md
 
-/.bundle
+#
+# OS X
+#
+.DS_Store
+.AppleDouble
+.LSOverride
+# Icon must end with two \r
+Icon
+# Thumbnails
+._*
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
 
-/log/*
-/tmp/*
+#
+# Rails
+#
+.env
+.env.sample
+capybara-*.html
+.rspec
+log
+tmp
+db/*.sqlite3
+db/*.sqlite3-journal
+public/system
+coverage/
+spec/tmp
 
-/storage/*
-
-/vendor/bundle
-/node_modules
-/yarn-error.log
-yarn-debug.log*
-.yarn-integrity
-
-.byebug_history
-
-# Ignore master key for decrypting credentials and more.
-/config/master.key
+.bundle
+vendor/bundle
+node_modules
+config/master.key
 
