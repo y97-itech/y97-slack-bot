@@ -1,0 +1,106 @@
+version: 2
+jobs:
+  build:
+    parallelism: 3
+    docker:
+      - image: circleci/ruby:2.6.3-node
+        environment:
+          POSTGRES_HOST: localhost
+          POSTGRES_DB: y97-slack-bot_test
+          POSTGRES_USER: postgres
+          RAILS_ENV: test
+
+      - image: circleci/postgres:11.3-alpine
+        environment:
+          POSTGRES_DB: y97-slack-bot_test
+          POSTGRES_USER: postgres
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      - run:
+          name: Configure Bundler
+          command: |
+            export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d ' ')
+            gem install bundler -v $BUNDLER_VERSION
+
+      # Restore bundle cache
+      # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+      - restore_cache:
+          keys:
+            - y97-slack-bot-bundle-{{ checksum "Gemfile.lock" }}
+            - y97-slack-bot-bundle-
+
+      - run: # Install Ruby dependencies
+          name: Bundle Install
+          command: bundle check || bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      # Store bundle cache for Ruby dependencies
+      - save_cache:
+          key: y97-slack-bot-bundle-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      # Only necessary if app uses webpacker or yarn in some other way
+      - restore_cache:
+          keys:
+            - y97-slack-bot-yarn-{{ checksum "yarn.lock" }}
+            - y97-slack-bot-yarn-
+
+      - run:
+          name: Yarn Install
+          command: yarn install --cache-folder ~/.cache/yarn
+
+      # Store yarn / webpacker cache
+      - save_cache:
+          key: y97-slack-bot-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
+      - run:
+          name: Show Versions
+          command: |
+            ruby -v
+            bundle -v
+            echo "node $(node -v)"
+
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      - run:
+          name: Database Config
+          command: cp config/database.yml.circleci config/database.yml
+
+      - run:
+          name: Database setup
+          command: |
+            bundle exec rails db:create
+            bundle exec rails db:schema:load --trace
+
+      - run:
+          name: Run rspec in parallel
+          command: |
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out test_results/rspec.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+
+      # Save test results for timing analysis
+      # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
+      - store_test_results:
+          path: test_results
+
+      - run:
+          name: Run rubocop
+          command: bundle exec rubocop
+          when: always
+
+      - run:
+          name: Run eslint
+          command: yarn run eslint --ext js,vue app/javascript
+          when: always
+
