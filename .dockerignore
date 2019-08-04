@@ -1,0 +1,20 @@
+.keep
+
+/.bundle
+
+/log/*
+/tmp/*
+
+/storage/*
+
+/vendor/bundle
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+.byebug_history
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
