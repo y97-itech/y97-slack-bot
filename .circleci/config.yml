@@ -110,20 +110,27 @@ jobs:
       - image: circleci/classic:edge
     steps:
       - checkout
-      - run:
-          name: "build docker image"
-          command: docker build --rm=false -t registry.heroku.com/${HEROKU_APP_NAME}/web .
+      #- run:
+      #    name: "build docker image"
+      #    command: docker build --rm=false -t registry.heroku.com/${HEROKU_APP_NAME}/web .
       - run:
           name: setup heroku command
           command: bash .circleci/setup_heroku.sh
       - run:
           name: Heroku Maintenance ON
           command: heroku maintenance:on -a $HEROKU_APP_NAME
+      #- run:
+      #    name: "push container to registry.heroku.com"
+      #    command: |
+      #      docker login --username=_ --password=$HEROKU_AUTH_TOKEN registry.heroku.com
+      #      docker push registry.heroku.com/${HEROKU_APP_NAME}/web
       - run:
-          name: "push container to registry.heroku.com"
+          name: heroku push
           command: |
-            docker login --username=_ --password=$HEROKU_AUTH_TOKEN registry.heroku.com
-            docker push registry.heroku.com/${HEROKU_APP_NAME}/web
+            heroku login
+            heroku container:login
+            heroku container:push web
+            heroku container:release web
       - run:
           name: heroku db migrate
           command: heroku run rails db:migrate --app ${HEROKU_APP_NAME}
