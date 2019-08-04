@@ -25,7 +25,11 @@ COPY package.json $APP_ROOT/package.json
 COPY yarn.lock $APP_ROOT/yarn.lock
 RUN yarn install
 
+# Copy project files
 COPY . $APP_ROOT
+
+# Webpack build
+RUN bundle exec rails webpacker:compile
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
