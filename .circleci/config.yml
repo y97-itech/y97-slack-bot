@@ -121,8 +121,8 @@ deploy:
           command: |
             heroku login
             heroku container:login
-            heroku container:push web --app ${HEROKU_APP_NAME}
-            heroku container:release web --app ${HEROKU_APP_NAME}
+            heroku container:push web --app $HEROKU_APP_NAME
+            heroku container:release web --app $HEROKU_APP_NAME
       - run:
           name: Heroku Maintenance OFF
           command: heroku maintenance:off -a $HEROKU_APP_NAME
