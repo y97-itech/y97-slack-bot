@@ -107,8 +107,9 @@ jobs:
   deploy:
     working_directory: /tmp/ci
     docker:
-      - image: circleci/classic:edge
+      - image: buildpack-deps:trusty
     steps:
+      - setup_remote_docker
       - checkout
       #- run:
       #    name: "build docker image"
