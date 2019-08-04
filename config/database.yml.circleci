@@ -1,0 +1,9 @@
+test:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: y97_slack_bot_test
+  username: postgres
+  password:
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
