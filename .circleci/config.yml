@@ -104,7 +104,7 @@ jobs:
           command: yarn run eslint --ext js,vue app/javascript
           when: always
 
-deploy:
+  deploy:
     working_directory: /tmp/ci
     docker:
       - image: buildpack-deps:trusty
