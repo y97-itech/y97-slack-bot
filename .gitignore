@@ -36,3 +36,6 @@ yarn-debug.log*
 # Ignore bundler install path.
 vendor/bundle
 
+# Ignore VSCode History
+.history
+
