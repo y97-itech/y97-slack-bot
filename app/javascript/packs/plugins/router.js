@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import PageNotFound from '../../pages/PageNotFound'
+import Auth from '../../pages/Auth'
 import Home from '../../pages/Home'
 import Foo from '../../pages/Foo'
 import Baa from '../../pages/Baa'
@@ -9,6 +10,7 @@ import Baa from '../../pages/Baa'
 Vue.use(VueRouter)
 
 const routes = [
+  { path: '/auth', component: Auth },
   { path: '/', component: Home },
   { path: '/foo', component: Foo },
   { path: '/baa', component: Baa },
