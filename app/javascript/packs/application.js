@@ -14,4 +14,18 @@
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
+import Vue from 'vue'
+import vuetify from './plugins/vuetify'
+import App from '../app.vue'
+
+document.addEventListener('DOMContentLoaded', () => {
+  const app = new Vue({
+    vuetify,
+    render: h => h(App)
+  }).$mount()
+  document.body.appendChild(app.$el)
+
+  console.log(app)
+})
+
 console.log('Hello World from Webpacker')
