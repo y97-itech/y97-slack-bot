@@ -8,7 +8,7 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '84dbc084ba7b988938418038854a2ac9e816f003e66199c37522ee5934e9c53ddd1ca8815f23f690c14c9500fececae84c871d0dea902384527111b2469ddef5'
+  # config.secret_key = '0ebaa4f5a1d9971ac574b189d770a0c654bbbcd9f75c69eeed1f3b25b1d2cfc16ab7129d5d0f4168f99cc38e8bd7242c4dc0b1ab345614bab63dbc3a1fe96d87'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -114,7 +114,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 11
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = 'e0e56d655f2b6e26c6238bc4f4ccdf9942740d1b0e5e3cd7184930df9ad4616bf63f7d2c4b45973bf31aee90671254c89abf0403aeffd9bcb5067f6db3954eff'
+  # config.pepper = '7c62b1db63119a7b4287f9b8d4f1479f29910adc0d48ba6710bf90680e2a0aa3018ea49302487ee031083c8082bf1f655f4d22adcb029133a6d6937e1270bd13'
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false
@@ -145,7 +145,7 @@ Devise.setup do |config|
   # initial account confirmation) to be applied. Requires additional unconfirmed_email
   # db field (see migrations). Until confirmed, new email is stored in
   # unconfirmed_email column, and copied to email column on successful confirmation.
-  config.reconfirmable = true
+  # config.reconfirmable = true
 
   # Defines which key will be used when confirming an account
   # config.confirmation_keys = [:email]
@@ -260,7 +260,6 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  config.omniauth :slack, ENV['SLACK_CLIENT_ID'], ENV['SLACK_CLIENT_SECRET'], scope: 'bot,users:read,channels:read,groups:read,chat:write:bot'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
