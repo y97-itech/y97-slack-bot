@@ -1,17 +1,18 @@
 <template>
-  <v-app id="app">
-    <x-app-bar></x-app-bar>
+  <v-app>
+    <navi-bar></navi-bar>
     <v-content>
       <v-container fluid fill-height>
-        <router-view></router-view>
+        <router-view v-if="isSignedIn"></router-view>
+        <auth v-else></auth>
       </v-container>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import axios from 'axios'
-import XAppBar from './components/AppBar'
+import NaviBar from './components/AppBar'
+import Auth from './pages/Auth'
 
 export default {
   data: function () {
@@ -19,24 +20,14 @@ export default {
       message: 'Hello Vuetify!'
     }
   },
-  created: function () {
-    axios.defaults.headers['X-CSRF-TOKEN'] = document.querySelector('meta[name=csrf-token]').getAttribute('content')
-    this.signIn()
-  },
-  methods: {
-    signIn: function () {
-      console.log('sign_in was called.')
-      axios.get('/session.json').then((res) => {
-        if (res.data.auth) {
-          this.$store.commit('onSignIn', res.data)
-        }
-      }).catch((err) => {
-        console.log(err)
-      })
+  computed: {
+    isSignedIn: function () {
+      return this.$store.state.status
     }
   },
   components: {
-    XAppBar
+    NaviBar,
+    Auth
   }
 }
 </script>

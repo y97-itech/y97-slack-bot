@@ -11,5 +11,10 @@
   </head>
 
   <body>
+    <% if signed_in? %>
+      <div id="app" data-auth="true" data-user-name="<%= current_user.user_info.profile.display_name %>" data-user-image="<%= current_user.user_info.profile.image_48 %>" data-team-name="<%= current_user.team_info.name %>"></div>
+    <% else %>
+      <div id="app" data-auth="false"></div>
+    <% end %>
   </body>
 </html>
