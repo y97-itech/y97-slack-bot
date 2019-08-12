@@ -15,12 +15,14 @@
 // const imagePath = (name) => images(name, true)
 
 import Vue from 'vue'
+import store from './plugins/store'
 import router from './plugins/router'
 import vuetify from './plugins/vuetify'
 import App from '../app.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
+    store,
     router,
     vuetify,
     render: h => h(App)
