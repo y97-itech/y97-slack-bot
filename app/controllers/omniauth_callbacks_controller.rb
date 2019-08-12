@@ -12,4 +12,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
+  def after_omniauth_failure_path_for(scope)
+    '/auth'
+  end
 end
