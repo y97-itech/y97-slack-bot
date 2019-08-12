@@ -1,22 +1,22 @@
 <template>
   <div>
-    <v-app-bar absolute dark v-if="isLoggedIn">
+    <v-app-bar absolute dark v-if="isSignedIn">
       <v-toolbar-title>
         <router-link to="/" class="toolbar-title">y97 slack bot</router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-btn text><router-link to="/foo">Go to Foo</router-link></v-btn>
-        <v-btn text><router-link to="/baa">Go to Bar</router-link></v-btn>
-        <v-btn text>{{ team.name }} / {{ user.profile.display_name }}</v-btn>
-        <v-btn text @click="logout">logout</v-btn>
+        <v-btn text link to="/foo">Foo</v-btn>
+        <v-btn text link to="/baa">Bar</v-btn>
+        <v-btn text>{{ teamName }} / {{ userName }}</v-btn>
+        <v-btn text @click="signOut">Sign Out</v-btn>
       </v-toolbar-items>
     </v-app-bar>
     <v-app-bar absolute dark v-else>
       <v-toolbar-title>y97 slack bot</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-btn text><router-link to="/auth">Auth</router-link></v-btn>
+        <v-btn text link to="/auth">Auth</v-btn>
       </v-toolbar-items>
     </v-app-bar>
   </div>
@@ -29,29 +29,25 @@ export default {
   name: 'AppBar',
   data: function () {
     return {
-      user: {},
-      team: {},
-      isLoggedIn: false
     }
   },
   created: function () {
-    axios.defaults.headers['X-CSRF-TOKEN'] = document.querySelector('meta[name=csrf-token]').getAttribute('content')
-    axios.get('/session.json').then((res) => {
-      if (res.data.auth) {
-        this.user = res.data.user
-        this.team = res.data.team
-        this.isLoggedIn = true
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+
   },
   computed: {
+    isSignedIn: function () {
+      return this.$store.state.status
+    },
+    userName: function () {
+      return this.$store.state.user.profile.display_name
+    },
+    teamName: function () {
+      return this.$store.state.team.name
+    }
   },
   methods: {
-    logout: function () {
-      console.log('logout?')
+    signOut: function () {
+      console.log('sign_out was called.')
       axios.delete('/session').then((res) => {
         console.log(res)
       })
@@ -59,8 +55,7 @@ export default {
         console.log(err)
       })
       .finally(() => {
-        this.user = {}
-        this.isLoggedIn = false
+        this.$store.commit('onSignOff')
         this.$router.push('/auth')
       })
     }

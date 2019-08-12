@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import XAppBar from './components/AppBar'
 
 export default {
@@ -18,8 +19,25 @@ export default {
       message: 'Hello Vuetify!'
     }
   },
+  created: function () {
+    axios.defaults.headers['X-CSRF-TOKEN'] = document.querySelector('meta[name=csrf-token]').getAttribute('content')
+    this.signIn()
+  },
+  methods: {
+    signIn: function () {
+      console.log('sign_in was called.')
+      axios.get('/session.json').then((res) => {
+        if (res.data.auth) {
+          this.$store.commit('onSignIn', res.data)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
+  },
   components: {
-    'x-app-bar': XAppBar
+    XAppBar
   },
 }
 </script>
