@@ -6,8 +6,8 @@
       <v-toolbar-items v-if="isSignedIn">
         <v-btn text link to="/">Home</v-btn>
         <v-btn text link to="/foo">Foo</v-btn>
-        <v-btn text link to="/baa">Bar</v-btn>
-        <v-btn text link to="/profile"><v-img :alt="userName" :src="userImage" width="48" height="48"></v-img></v-btn>
+        <v-btn text link to="/baa">Baa</v-btn>
+        <v-btn text link to="/profile"><img :alt="userName" :src="userImage" width="48" height="48" class="avatar" /></v-btn>
       </v-toolbar-items>
     </v-app-bar>
   </div>
@@ -38,3 +38,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.avatar {
+  border-radius: 50%;
+}
+</style>
