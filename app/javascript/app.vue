@@ -30,14 +30,13 @@ export default {
         if (res.data.auth) {
           this.$store.commit('onSignIn', res.data)
         }
-      })
-      .catch((err) => {
+      }).catch((err) => {
         console.log(err)
       })
     }
   },
   components: {
     XAppBar
-  },
+  }
 }
 </script>

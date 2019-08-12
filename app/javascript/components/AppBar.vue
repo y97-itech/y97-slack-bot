@@ -50,11 +50,9 @@ export default {
       console.log('sign_out was called.')
       axios.delete('/session').then((res) => {
         console.log(res)
-      })
-      .catch((err) => {
+      }).catch((err) => {
         console.log(err)
-      })
-      .finally(() => {
+      }).finally(() => {
         this.$store.commit('onSignOff')
         this.$router.push('/auth')
       })
