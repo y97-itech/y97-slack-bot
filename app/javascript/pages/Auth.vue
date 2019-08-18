@@ -20,10 +20,10 @@ export default {
   data: () => ({
   }),
   computed: {
-    csrfToken() {
+    csrfToken () {
       // TODO: CSRF-Token の管理方法を考える
       return document.querySelector('meta[name=csrf-token]').getAttribute('content')
     }
-  },
+  }
 }
 </script>
