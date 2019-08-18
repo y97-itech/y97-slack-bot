@@ -41,3 +41,6 @@ vendor/bundle
 
 # Ignore VSCode History
 .history
+
+# Ignore IntelliJ IDEA Settings
+.idea
