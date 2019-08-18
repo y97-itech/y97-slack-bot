@@ -33,6 +33,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-slack'
+gem 'omniauth-rails_csrf_protection'
 
 # Slack Client
 gem 'slack-ruby-client'
