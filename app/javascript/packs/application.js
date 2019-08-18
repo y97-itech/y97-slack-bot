@@ -15,17 +15,39 @@
 // const imagePath = (name) => images(name, true)
 
 import Vue from 'vue'
+import store from './plugins/store'
+import router from './plugins/router'
 import vuetify from './plugins/vuetify'
 import App from '../app.vue'
 
+import axios from 'axios'
+
 document.addEventListener('DOMContentLoaded', () => {
-  const app = new Vue({
+  const elm = document.querySelector('#app')
+  if (!elm) {
+    return
+  }
+
+  if (elm.dataset.auth === 'true') {
+    store.commit('onSignIn', {
+      user: {
+        name: elm.dataset.userName,
+        image: elm.dataset.userImage
+      },
+      team: {
+        name: elm.dataset.teamName
+      }
+    })
+  }
+
+  axios.defaults.headers['X-CSRF-TOKEN'] = document.querySelector('meta[name=csrf-token]').getAttribute('content')
+
+  new Vue({
+    store,
+    router,
     vuetify,
     render: h => h(App)
-  }).$mount()
-  document.body.appendChild(app.$el)
-
-  console.log(app)
+  }).$mount(elm)
 })
 
 console.log('Hello World from Webpacker')

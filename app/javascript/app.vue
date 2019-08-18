@@ -1,26 +1,33 @@
 <template>
-  <v-app id="app">
+  <v-app>
+    <navi-bar></navi-bar>
     <v-content>
       <v-container fluid fill-height>
-        <v-layout align-center justify-center>
-          <v-card dark>
-            <v-card-text>{{ message }}</v-card-text>
-          </v-card>
-        </v-layout>
+        <router-view v-if="isSignedIn"></router-view>
+        <auth v-else></auth>
       </v-container>
     </v-content>
   </v-app>
 </template>
 
 <script>
+import NaviBar from './components/AppBar'
+import Auth from './pages/Auth'
+
 export default {
   data: function () {
     return {
       message: 'Hello Vuetify!'
     }
+  },
+  computed: {
+    isSignedIn: function () {
+      return this.$store.state.status
+    }
+  },
+  components: {
+    NaviBar,
+    Auth
   }
 }
 </script>
-
-<style scoped>
-</style>

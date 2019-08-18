@@ -29,6 +29,15 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
+# Authentication / Authorization
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-slack'
+gem 'omniauth-rails_csrf_protection'
+
+# Slack Client
+gem 'slack-ruby-client'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -37,6 +46,7 @@ group :development, :test do
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'rubocop-performance'
+  gem 'dotenv-rails'
 end
 
 group :development do

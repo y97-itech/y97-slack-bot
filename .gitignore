@@ -36,6 +36,11 @@ yarn-debug.log*
 # Ignore bundler install path.
 vendor/bundle
 
+# Ignore Environment Arguments
+.env
+
 # Ignore VSCode History
 .history
 
+# Ignore IntelliJ IDEA Settings
+.idea
