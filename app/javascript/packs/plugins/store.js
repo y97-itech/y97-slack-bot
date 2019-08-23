@@ -3,20 +3,14 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+// TODO: 状態管理は見直しを行う
 export default new Vuex.Store({
   state: {
     user: {},
-    team: {},
-    status: false
+    team: {}
   },
   mutations: {
-    onSignIn: function (state, data) {
-      state.user = data.user
-      state.team = data.team
-      state.status = true
-    },
-    onSignOff: function (state) {
-      state.status = false
+    signOff: function (state) {
       state.user = {}
       state.team = {}
     }
@@ -25,15 +19,13 @@ export default new Vuex.Store({
     signIn (context, user, team) {
       context.commit({
         user: user,
-        team: team,
-        status: true
+        team: team
       })
     },
     signOff (context) {
       context.commit({
         user: {},
-        team: {},
-        status: false
+        team: {}
       })
     }
   },
@@ -43,9 +35,6 @@ export default new Vuex.Store({
     },
     team: state => {
       return state.team
-    },
-    isSignedIn: state => {
-      return state.status
     }
   }
 })

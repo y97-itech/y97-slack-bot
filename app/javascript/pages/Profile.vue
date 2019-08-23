@@ -16,15 +16,13 @@ export default {
   methods: {
     signOut: function () {
       console.log('sign_out was called.')
-      axios.delete('/session').then(res => {
-        console.log(res)
+      axios.delete('/api/session')
+      .then((response) => {
+        console.log(response)
       })
-        .catch(err => {
-          console.log(err)
-        })
-        .finally(() => {
-          this.$store.commit('onSignOff')
-        })
+      .finally(() => {
+        location.reload()
+      })
     }
   }
 }

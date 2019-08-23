@@ -8,7 +8,4 @@
     %link{:href => "https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900", :rel => "stylesheet"}/
     = javascript_pack_tag 'application'
   %body
-    - if signed_in?
-      #app{"data-auth" => "true", "data-team-name" => "#{current_user.team_info.name}", "data-user-image" => "#{current_user.user_info.profile.image_48}", "data-user-name" => "#{current_user.user_info.profile.display_name}"}
-    - else
-      #app{"data-auth" => "false"}
+    = yield 
