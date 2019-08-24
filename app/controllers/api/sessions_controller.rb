@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class SessionsController < ApplicationController
+class Api::SessionsController < ApplicationController
   def show
-    if signed_in? :user
+    if user_signed_in?
       render json: {
         auth: true,
         user: current_user.user_info,
@@ -14,9 +14,10 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    if signed_in? :user
+    if user_signed_in?
       logger.debug('signed in, then out!')
       sign_out :user
     end
+    render json: { auth: false }
   end
 end

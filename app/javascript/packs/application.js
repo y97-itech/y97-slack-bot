@@ -15,12 +15,11 @@
 // const imagePath = (name) => images(name, true)
 
 import Vue from 'vue'
-import store from './plugins/store'
-import router from './plugins/router'
-import vuetify from './plugins/vuetify'
-import App from '../app.vue'
-
 import axios from 'axios'
+import router from './router'
+import store from './store'
+import vuetify from './vuetify'
+import App from '../app.vue'
 
 document.addEventListener('DOMContentLoaded', () => {
   const elm = document.querySelector('#app')
@@ -28,23 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
     return
   }
 
-  if (elm.dataset.auth === 'true') {
-    store.commit('onSignIn', {
-      user: {
-        name: elm.dataset.userName,
-        image: elm.dataset.userImage
-      },
-      team: {
-        name: elm.dataset.teamName
-      }
-    })
-  }
-
   axios.defaults.headers['X-CSRF-TOKEN'] = document.querySelector('meta[name=csrf-token]').getAttribute('content')
 
   new Vue({
-    store,
     router,
+    store,
     vuetify,
     render: h => h(App)
   }).$mount(elm)

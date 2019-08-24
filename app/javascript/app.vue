@@ -1,33 +1,43 @@
 <template>
-  <v-app>
-    <navi-bar></navi-bar>
-    <v-content>
-      <v-container fluid fill-height>
-        <router-view v-if="isSignedIn"></router-view>
-        <auth v-else></auth>
-      </v-container>
-    </v-content>
-  </v-app>
+  <app-layout>
+    <div v-if="isLoading">
+      <p>is loading ...</p>
+    </div>
+    <router-view v-else-if="isSignedIn"></router-view>
+    <auth v-else></auth>
+  </app-layout>
 </template>
 
 <script>
-import NaviBar from './components/AppBar'
+import axios from 'axios'
+import { mapGetters } from 'vuex'
+import AppLayout from './components/AppLayout'
 import Auth from './pages/Auth'
 
 export default {
   data: function () {
     return {
-      message: 'Hello Vuetify!'
+      isLoading: true
     }
+  },
+  created: function () {
+    axios.get('/api/session').then((response) => {
+      if (response.data.auth) {
+        this.$store.dispatch('signIn', response.data)
+      } else {
+        console.log('no authentication.')
+      }
+    }).catch((error) => {
+      console.log(error)
+    }).finally(() => {
+      this.isLoading = false
+    })
   },
   computed: {
-    isSignedIn: function () {
-      return this.$store.state.status
-    }
+    ...mapGetters(['isSignedIn'])
   },
   components: {
-    NaviBar,
-    Auth
+    AppLayout, Auth
   }
 }
 </script>
