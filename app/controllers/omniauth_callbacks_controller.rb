@@ -18,11 +18,4 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def after_omniauth_failure_path_for(scope)
     '/auth'
   end
-
-  private
-
-  # def redirect_path
-  #   path = request.env['omniauth.origin'] || '/'
-  #   %r{\Ahttp[s]?://[^/]+/auth.*}.match?(path) ? '/' : path
-  # end
 end
