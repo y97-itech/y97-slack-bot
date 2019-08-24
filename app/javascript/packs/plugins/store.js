@@ -3,38 +3,35 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-// TODO: 状態管理は見直しを行う
 export default new Vuex.Store({
   state: {
-    user: {},
-    team: {}
+    session: null
   },
   mutations: {
-    signOff: function (state) {
-      state.user = {}
-      state.team = {}
+    setSession (state, session) {
+      state.session = session
+    },
+    clearSession (state) {
+      state.session = null
     }
   },
   actions: {
-    signIn (context, user, team) {
-      context.commit({
-        user: user,
-        team: team
-      })
+    signIn (context, session) {
+      context.commit('setSession', session)
     },
     signOff (context) {
-      context.commit({
-        user: {},
-        team: {}
-      })
+      context.commit('clearSession')
     }
   },
   getters: {
+    isSignedIn: state => {
+      return !!state.session
+    },
     user: state => {
-      return state.user
+      return state.session.user
     },
     team: state => {
-      return state.team
+      return state.session.team
     }
   }
 })

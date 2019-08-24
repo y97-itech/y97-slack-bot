@@ -13,9 +13,6 @@
 import NaviBar from './NaviBar'
 
 export default {
-  props: {
-    isSignedIn: { type: Boolean, default: false }
-  },
   components: { NaviBar }
 }
 </script>

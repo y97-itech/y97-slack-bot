@@ -18,5 +18,6 @@ class Api::SessionsController < ApplicationController
       logger.debug('signed in, then out!')
       sign_out :user
     end
+    render json: { auth: false }
   end
 end
