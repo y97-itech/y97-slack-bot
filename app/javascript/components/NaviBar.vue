@@ -7,7 +7,7 @@
         <v-btn text link to="/">Home</v-btn>
         <v-btn text link to="/foo">Foo</v-btn>
         <v-btn text link to="/baa">Baa</v-btn>
-        <v-btn text link to="/profile"><img :alt="user.profile.displayName" :src="user.profile.image_48" width="48" height="48" class="avatar" /></v-btn>
+        <v-btn text link to="/profile"><img :alt="user.profile['display_name']" :src="user.profile.image_48" width="48" height="48" class="avatar" /></v-btn>
       </v-toolbar-items>
     </v-app-bar>
   </div>
@@ -18,7 +18,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['isSignedIn', 'user', 'team'])
+    ...mapGetters(['isSignedIn', 'user'])
   }
 }
 </script>

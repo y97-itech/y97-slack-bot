@@ -2,7 +2,9 @@
   <v-layout align-center justify-center fill-height>
     <v-card>
       <v-card-title>Profile</v-card-title>
-      <v-card-text>Hi?</v-card-text>
+      <v-card-text>
+        name: {{user.profile['display_name']}}
+      </v-card-text>
       <v-card-text><v-btn text @click="signOut">Sign Out</v-btn></v-card-text>
     </v-card>
   </v-layout>
@@ -10,6 +12,7 @@
 
 <script>
 import axios from 'axios'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Profile',
@@ -22,9 +25,12 @@ export default {
         console.log(error)
       }).finally(() => {
         this.$store.dispatch('signOff')
-        location.reload()
+        this.$router.push('/')
       })
     }
+  },
+  computed: {
+    ...mapGetters(['user', 'team'])
   }
 }
 </script>

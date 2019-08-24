@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import PageNotFound from '../../pages/PageNotFound'
-import Home from '../../pages/Home'
-import Profile from '../../pages/Profile'
-import Foo from '../../pages/Foo'
-import Baa from '../../pages/Baa'
+import Home from '../pages/Home'
+import Profile from '../pages/Profile'
+import Foo from '../pages/Foo'
+import Baa from '../pages/Baa'
+import PageNotFound from '../pages/PageNotFound'
 
 Vue.use(VueRouter)
 
@@ -19,5 +19,5 @@ const routes = [
 
 export default new VueRouter({
   mode: 'history',
-  routes // `routes: routes` の短縮表記
+  routes // Note: `routes: routes` の短縮表記
 })
